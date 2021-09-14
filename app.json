@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "AISO-app",
+    "slug": "AISO-app",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "AISO-app"
+}
