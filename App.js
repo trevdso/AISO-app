@@ -1,26 +1,53 @@
 import React from "react";
-import {
-  StatusBar,
-  SafeAreaView,
-  Text,
-  View,
-  Alert,
-  Platform,
-} from "react-native";
-import Button from "./src/components/Button/Button";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import tw from "./lib/tailwind";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
+//Screens
+import DevicesScreen from "./src/screens/DevicesScreen";
+import RemoteScreen from "./src/screens/RemoteScreen";
 
 const App = () => {
-  StatusBar.setBarStyle("light-content", true);
-  Platform.OS === "android" && StatusBar.setTranslucent(true);
+  const Tab = createBottomTabNavigator();
+  const globalTheme = {
+    colors: {
+      background: tw.color("aiso-gray"),
+      primary: tw.color("aiso-blue"),
+      card: tw.color("aiso-gray"),
+      text: tw.color("white"),
+      border: tw.color("black"),
+      notification: tw.color("aiso-blue"),
+    },
+  };
   return (
-    <SafeAreaView style={tw`flex-1 items-center justify-center bg-aiso-gray`}>
-      <StatusBar style={tw`text-white`} />
-      <View style={tw`bg-aiso-gray`}>
-        <Text style={tw`text-white`}>Test app</Text>
-        <Button title="Test!" onPress={() => Alert.alert("Clicked!")} />
-      </View>
-    </SafeAreaView>
+    <NavigationContainer theme={globalTheme}>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ color, size }) => {
+            let iconName;
+            if (route.name === "Remote") {
+              iconName = "remote-tv";
+            } else if (route.name === "Devices") {
+              iconName = "robot-industrial";
+            }
+
+            return (
+              <MaterialCommunityIcons
+                name={iconName}
+                size={size}
+                color={color}
+              />
+            );
+          },
+          tabBarActiveTintColor: tw.color("aiso-blue"),
+          tabBarInactiveTintColor: tw.color("white"),
+        })}
+      >
+        <Tab.Screen name="Remote" component={RemoteScreen} />
+        <Tab.Screen name="Devices" component={DevicesScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 };
 
