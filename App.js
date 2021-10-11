@@ -1,53 +1,54 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import tw from "./lib/tailwind";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React, { useState, useEffect } from "react";
+import { View, Text } from "react-native";
 
-//Screens
-import DevicesScreen from "./src/screens/DevicesScreen";
-import RemoteScreen from "./src/screens/RemoteScreen";
+// Firebase
+import firebase from "firebase";
+import { firebaseConfig } from "./firebase";
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+  console.log("initialized");
+}
+
+// Redux
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import rootReducer from "./redux/reducers";
+import thunk from "redux-thunk";
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
+// Utils
+import tw from "./lib/tailwind";
+
+// Screens
+import LoginRegisterScreen from "./src/screens/LoginRegisterScreen";
+import UserHomeScreen from "./src/screens/UserHomeScreen";
 
 const App = () => {
-  const Tab = createBottomTabNavigator();
-  const globalTheme = {
-    colors: {
-      background: tw.color("aiso-gray"),
-      primary: tw.color("aiso-blue"),
-      card: tw.color("aiso-gray"),
-      text: tw.color("white"),
-      border: tw.color("black"),
-      notification: tw.color("aiso-blue"),
-    },
-  };
-  return (
-    <NavigationContainer theme={globalTheme}>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ color, size }) => {
-            let iconName;
-            if (route.name === "Remote") {
-              iconName = "remote-tv";
-            } else if (route.name === "Devices") {
-              iconName = "robot-industrial";
-            }
+  const [loaded, setLoaded] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
-            return (
-              <MaterialCommunityIcons
-                name={iconName}
-                size={size}
-                color={color}
-              />
-            );
-          },
-          tabBarActiveTintColor: tw.color("aiso-blue"),
-          tabBarInactiveTintColor: tw.color("white"),
-        })}
-      >
-        <Tab.Screen name="Remote" component={RemoteScreen} />
-        <Tab.Screen name="Devices" component={DevicesScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        setLoggedIn(false);
+        setLoaded(true);
+      } else {
+        setLoggedIn(true);
+        setLoaded(true);
+      }
+    });
+  }, []);
+
+  return !loaded ? (
+    <View>
+      <Text>Loading</Text>
+    </View>
+  ) : !loggedIn ? (
+    <LoginRegisterScreen />
+  ) : (
+    <Provider store={store}>
+      <UserHomeScreen />
+    </Provider>
   );
 };
 
