@@ -5,14 +5,11 @@ import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { fetchUser } from "../redux/actions";
-import tw from "./lib/tailwind";
+import tw from "../../lib/tailwind";
 
 // Screens
-import DevicesScreen from "./src/screens/DevicesScreen";
-import RemoteScreen from "./src/screens/RemoteScreen";
+import DevicesScreen from "./DevicesScreen";
+import RemoteScreen from "./RemoteScreen";
 
 const UserHomeScreen = () => {
   const Tab = createBottomTabNavigator();
@@ -56,8 +53,6 @@ const UserHomeScreen = () => {
     </NavigationContainer>
   );
 };
-
-const mapDispatchToProps = (disptach) => bindActionCreators({});
 
 export default UserHomeScreen;
 

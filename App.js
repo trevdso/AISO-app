@@ -2,19 +2,11 @@ import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 
 // Firebase
-import firebase from "firebase";
-import { firebaseConfig } from "./firebase";
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-  console.log("initialized");
-}
+import { getAuth, onAuthStateChanged } from "@firebase/auth";
+import { app } from "./firebase";
 
-// Redux
-import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
-import rootReducer from "./redux/reducers";
-import thunk from "redux-thunk";
-const store = createStore(rootReducer, applyMiddleware(thunk));
+// Recoil
+import { RecoilRoot } from "recoil";
 
 // Utils
 import tw from "./lib/tailwind";
@@ -26,9 +18,10 @@ import UserHomeScreen from "./src/screens/UserHomeScreen";
 const App = () => {
   const [loaded, setLoaded] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const auth = getAuth(app);
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
+    onAuthStateChanged(auth, (user) => {
       if (!user) {
         setLoggedIn(false);
         setLoaded(true);
@@ -46,9 +39,14 @@ const App = () => {
   ) : !loggedIn ? (
     <LoginRegisterScreen />
   ) : (
-    <Provider store={store}>
+    <RecoilRoot>
       <UserHomeScreen />
-    </Provider>
+    </RecoilRoot>
+    /*
+      <Provider store={store}>
+        <UserHomeScreen />
+      </Provider>
+    */
   );
 };
 

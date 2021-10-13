@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
-import firebase from "firebase";
+import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
+import { app } from "../../../firebase";
 import { StyleSheet, Text, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import Button from "../Button/Button";
@@ -9,11 +10,10 @@ const Register = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const auth = getAuth(app);
 
   const registerNewUser = (email, name, password) => {
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
+    createUserWithEmailAndPassword(auth, email, password)
       .then((result) => {
         firebase
           .firestore()

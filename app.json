@@ -2,6 +2,7 @@
   "expo": {
     "name": "AISO-app",
     "slug": "AISO-app",
+    "sdkVersion": "42.0.0",
     "version": "1.0.0",
     "assetBundlePatterns": ["**/*"],
     "icon": "./assets/icon.png",
