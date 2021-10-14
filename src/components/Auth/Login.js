@@ -12,9 +12,7 @@ const Login = ({ navigation }) => {
 
   const login = (email, password) => {
     signInWithEmailAndPassword(auth, email, password)
-      .then((result) => {
-        console.log(result);
-      })
+      .then((result) => {})
       .catch((error) => {
         console.log(error);
       });

@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 
-// Firebase
-import { getAuth, onAuthStateChanged } from "@firebase/auth";
-import { app } from "./firebase";
-
 // Recoil
 import { RecoilRoot } from "recoil";
 
-// Utils
-import tw from "./lib/tailwind";
+// Firebase
+import { getAuth, onAuthStateChanged } from "@firebase/auth";
+import { app } from "./firebase";
 
 // Screens
 import LoginRegisterScreen from "./src/screens/LoginRegisterScreen";
@@ -42,11 +39,6 @@ const App = () => {
     <RecoilRoot>
       <UserHomeScreen />
     </RecoilRoot>
-    /*
-      <Provider store={store}>
-        <UserHomeScreen />
-      </Provider>
-    */
   );
 };
 

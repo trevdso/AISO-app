@@ -1,5 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
+
+// Recoil
+import { useSetRecoilState } from "recoil";
+import { username } from "../recoil/atoms/userAtom";
+
+// Firebase
+import { app, db } from "../../firebase";
+import { getDoc, doc } from "@firebase/firestore";
+import { getAuth } from "@firebase/auth";
 
 // Utils
 import { NavigationContainer } from "@react-navigation/native";
@@ -10,6 +19,7 @@ import tw from "../../lib/tailwind";
 // Screens
 import DevicesScreen from "./DevicesScreen";
 import RemoteScreen from "./RemoteScreen";
+import PreferencesScreen from "./PreferencesScreen";
 
 const UserHomeScreen = () => {
   const Tab = createBottomTabNavigator();
@@ -23,6 +33,20 @@ const UserHomeScreen = () => {
       notification: tw.color("aiso-blue"),
     },
   };
+  const setUsername = useSetRecoilState(username);
+
+  useEffect(() => {
+    async function getUser() {
+      const querySnap = await getDoc(
+        doc(db, "users", getAuth(app).currentUser.uid)
+      );
+      return querySnap.data();
+    }
+    getUser().then((result) => {
+      setUsername(result.name);
+    });
+  }, []);
+
   return (
     <NavigationContainer theme={globalTheme}>
       <Tab.Navigator
@@ -49,6 +73,7 @@ const UserHomeScreen = () => {
       >
         <Tab.Screen name="Remote" component={RemoteScreen} />
         <Tab.Screen name="Devices" component={DevicesScreen} />
+        <Tab.Screen name="Preferences" component={PreferencesScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
