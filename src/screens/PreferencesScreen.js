@@ -5,14 +5,27 @@ import { View, Text } from "react-native";
 import { useSetRecoilState, useRecoilState, useRecoilValue } from "recoil";
 import { userLoggedIn, username } from "../recoil/atoms/userAtom";
 
+// Firebase
+import { getAuth, signOut } from "firebase/auth";
+
 // Utils
 import tw from "../../lib/tailwind";
+import Button from "../components/Button/Button";
 
 const PreferencesScreen = () => {
   const name = useRecoilValue(username);
+  const auth = getAuth();
+
+  const logout = () => {
+    signOut(auth).catch((error) => {
+      console.log(error);
+    });
+  };
+
   return (
     <View style={tw`flex-1 items-center justify-center`}>
       <Text style={tw`text-white`}>Username: {name}</Text>
+      <Button type="dangerous" title="Logout" onPress={() => logout()}></Button>
     </View>
   );
 };
