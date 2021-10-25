@@ -8,7 +8,7 @@
     "start": "react-native start"
   },
   "engines": {
-    "node": "16.8.x"
+    "node": "16.x.x"
   },
   "dependencies": {
     "@expo/metro-config": "^0.2.2",
