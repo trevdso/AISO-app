@@ -4,6 +4,7 @@ import { getAuth, signInWithEmailAndPassword } from "@firebase/auth";
 import { app } from "../../../firebase";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import Button from "../Button/Button";
+import tw from "../../../lib/tailwind";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -19,8 +20,8 @@ const Login = ({ navigation }) => {
   };
 
   return (
-    <View>
-      <TextInput
+    <View style={tw `flex-1 items-center justify-center bg-aiso-gray` } >
+      <TextInput 
         placeholder="Email"
         onChangeText={(val) => setEmail(val)}
       ></TextInput>
@@ -30,8 +31,8 @@ const Login = ({ navigation }) => {
         onChangeText={(val) => setPassword(val)}
       ></TextInput>
       <Button title="Login" onPress={() => login(email, password)} />
-      <Text>Not registered yet?</Text>
-      <Button
+      <Text style={ tw `text-white`}>Not registered yet?</Text>
+      <Button 
         title="Register"
         onPress={() => navigation.navigate("Register")}
       />
