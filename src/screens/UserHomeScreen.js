@@ -57,6 +57,8 @@ const UserHomeScreen = () => {
               iconName = "remote-tv";
             } else if (route.name === "Devices") {
               iconName = "robot-industrial";
+            } else if (route.name === "Preferences") {
+              iconName = "account-settings";
             }
 
             return (
