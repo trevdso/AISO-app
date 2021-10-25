@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { StyleSheet, Text, View, Alert, TextInput } from "react-native";
 import Button from "../components/Button/Button";
 
@@ -21,23 +22,29 @@ const DevicesScreen = () => {
     setInput("");
   };
 
-  useEffect(() => {
-    socket.on("chat message", (msg) => {
-      setAllMessages((oldMessages) => [...oldMessages, msg]);
-      console.log(msg);
-      console.log(allMessages);
-    });
-    socket.on("getAllOnlineDevices", (allDevices) => {
-      setAllDevices([...allDevices]);
-      console.log(allDevices);
-    });
+  useFocusEffect(
+    useCallback(() => {
+      console.log("reloaded");
+      socket.on("chat message", (msg) => {
+        setAllMessages((oldMessages) => [...oldMessages, msg]);
+        console.log(msg);
+        console.log(allMessages);
+      });
+      socket.on("getAllOnlineDevices", (allDevices) => {
+        setAllDevices([...allDevices]);
+        console.log(allDevices);
+      });
+      socket.on("connection", () => {
+        socket.emit("getAllOnlineDevices");
+      });
 
-    socket.emit("getAllOnlineDevices");
-    return () => {
-      socket.off("chat message");
-      socket.off("getAllDevices");
-    };
-  }, []);
+      socket.emit("getAllOnlineDevices");
+      return () => {
+        socket.off("chat message");
+        socket.off("getAllOnlineDevices");
+      };
+    }, [])
+  );
 
   return (
     <View style={tw`flex-1 items-center justify-center`}>
