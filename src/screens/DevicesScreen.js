@@ -66,7 +66,7 @@ const DevicesScreen = () => {
           </View>
         );
       })}
-      <TextInput
+      <TextInput 
         style={{ height: 40, borderWidth: 2, top: 600, color: "white" }}
         autoCorrect={false}
         value={input}

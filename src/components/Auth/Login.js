@@ -21,6 +21,7 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={tw `flex-1 items-center justify-center bg-aiso-gray` } >
+      /*I suggest there can be AI.SO logo on top */
       <TextInput style={ tw `text-indigo-50` }
         placeholder="Email"
         onChangeText={(val) => setEmail(val)}
@@ -31,7 +32,7 @@ const Login = ({ navigation }) => {
         onChangeText={(val) => setPassword(val)}
       ></TextInput>
       <Button title="Login" onPress={() => login(email, password)} />
-      <Text style={ tw `text-white`}>Not registered yet?</Text>
+      <Text style={ tw `text-white font-sans`}>Not registered yet?</Text>
       <Button 
         title="Register"
         onPress={() => navigation.navigate("Register")}
@@ -43,3 +44,4 @@ const Login = ({ navigation }) => {
 export default Login;
 
 const styles = StyleSheet.create({});
+
