@@ -21,11 +21,11 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={tw `flex-1 items-center justify-center bg-aiso-gray` } >
-      <TextInput 
+      <TextInput style={ tw `text-indigo-50` }
         placeholder="Email"
         onChangeText={(val) => setEmail(val)}
       ></TextInput>
-      <TextInput
+      <TextInput style={ tw `text-indigo-50` }
         placeholder="Password"
         secureTextEntry
         onChangeText={(val) => setPassword(val)}
