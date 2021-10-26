@@ -5,6 +5,8 @@ import { app } from "../../../firebase";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import Button from "../Button/Button";
 
+import socket from "../../../socket";
+
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,7 +14,11 @@ const Login = ({ navigation }) => {
 
   const login = (email, password) => {
     signInWithEmailAndPassword(auth, email, password)
-      .then((result) => {})
+      .then((result) => {
+        socket.auth = { deviceType: "user" };
+        socket.auth.name = email;
+        socket.connect();
+      })
       .catch((error) => {
         console.log(error);
       });

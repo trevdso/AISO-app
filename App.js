@@ -29,15 +29,17 @@ const App = () => {
     });
   }, []);
 
-  return !loaded ? (
-    <View>
-      <Text>Loading</Text>
-    </View>
-  ) : !loggedIn ? (
-    <LoginRegisterScreen />
-  ) : (
+  return (
     <RecoilRoot>
-      <UserHomeScreen />
+      {!loaded ? (
+        <View>
+          <Text>Loading</Text>
+        </View>
+      ) : !loggedIn ? (
+        <LoginRegisterScreen />
+      ) : (
+        <UserHomeScreen />
+      )}
     </RecoilRoot>
   );
 };
