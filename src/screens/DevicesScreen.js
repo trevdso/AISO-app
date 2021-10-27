@@ -9,6 +9,7 @@ import { devices } from "../recoil/atoms/deviceAtom";
 import { useRecoilState } from "recoil";
 
 import tw from "../../lib/tailwind";
+import DeviceChip from "../components/Common/DeviceChip";
 
 const DevicesScreen = () => {
   //const [allDevices, setAllDevices] = useState([]);
@@ -40,9 +41,12 @@ const DevicesScreen = () => {
     <View style={tw`flex-1 items-center justify-center`}>
       {allDevices.map((device, index) => {
         return (
-          <Text key={index} style={tw`text-white`}>
-            {device.id + " || " + device.name}
-          </Text>
+          <DeviceChip
+            key={index}
+            name={device.name}
+            deviceID={device.id}
+            onPress={null}
+          ></DeviceChip>
         );
       })}
     </View>
