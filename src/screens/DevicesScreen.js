@@ -11,21 +11,16 @@ import { useRecoilState } from "recoil";
 import tw from "../../lib/tailwind";
 import DeviceChip from "../components/Common/DeviceChip";
 
-const DevicesScreen = () => {
-  //const [allDevices, setAllDevices] = useState([]);
+const DevicesScreen = ({ navigation }) => {
   const [allDevices, setAllDevices] = useRecoilState(devices);
-  console.log(allDevices);
 
   useFocusEffect(
     useCallback(() => {
       socket.emit("get-bots", (response) => {
         setAllDevices([...response.data]);
-        console.log(response);
       });
       socket.on("bots", (bots) => {
-        //console.log(bots);
         setAllDevices([...bots]);
-        //console.log(allDevices);
       });
       socket.onAny((event, ...args) => {
         console.log(event, args);
@@ -45,7 +40,7 @@ const DevicesScreen = () => {
             key={index}
             name={device.name}
             deviceID={device.id}
-            onPress={null}
+            onPress={() => navigation.navigate("Remote", { device: device })}
           ></DeviceChip>
         );
       })}
