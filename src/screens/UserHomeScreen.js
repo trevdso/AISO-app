@@ -10,6 +10,9 @@ import { app, db } from "../../firebase";
 import { getDoc, doc } from "@firebase/firestore";
 import { getAuth } from "@firebase/auth";
 
+// Socket
+import socket from "../../socket";
+
 // Utils
 import { NavigationContainer } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -36,6 +39,11 @@ const UserHomeScreen = () => {
   const setUsername = useSetRecoilState(username);
 
   useEffect(() => {
+    if (getAuth(app).currentUser && !socket.connected) {
+      socket.auth = { deviceType: "user" };
+      socket.auth.name = getAuth(app).currentUser.email;
+      socket.connect();
+    }
     async function getUser() {
       const querySnap = await getDoc(
         doc(db, "users", getAuth(app).currentUser.uid)
