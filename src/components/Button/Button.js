@@ -7,7 +7,7 @@ const Button = (props) => {
   if (type == "normal") {
     return (
       <Pressable
-        style={tw`bg-aiso-blue items-center justify-center px-2 py-2`}
+        style={tw`bg-aiso-blue items-center justify-center px-2 py-2 w-40`}
         onPress={onPress}
       >
         <Text style={tw`text-white`}>{title}</Text>
