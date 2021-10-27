@@ -5,7 +5,7 @@ import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { app } from "../../../firebase";
 import { StyleSheet, Text, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import Button from "../Button/Button";
+import Button from "../Common/Button";
 
 import socket from "../../../socket";
 

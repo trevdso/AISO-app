@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { StyleSheet, Text, View, Alert, TextInput } from "react-native";
-import Button from "../components/Button/Button";
+import Button from "../components/Common/Button";
 
 import socket from "../../socket";
 

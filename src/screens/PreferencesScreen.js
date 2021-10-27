@@ -10,7 +10,7 @@ import { getAuth, signOut } from "firebase/auth";
 
 // Utils
 import tw from "../../lib/tailwind";
-import Button from "../components/Button/Button";
+import Button from "../components/Common/Button";
 
 import socket from "../../socket";
 

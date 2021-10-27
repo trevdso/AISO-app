@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "@firebase/auth";
 import { app } from "../../../firebase";
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import Button from "../Button/Button";
+import Button from "../Common/Button";
 import tw from "../../../lib/tailwind";
 
 import socket from "../../../socket";
@@ -26,19 +26,21 @@ const Login = ({ navigation }) => {
   };
 
   return (
-    <View style={tw `flex-1 items-center justify-center bg-aiso-gray` } >
-      <TextInput style={ tw `text-indigo-50` }
+    <View style={tw`flex-1 items-center justify-center bg-aiso-gray`}>
+      <TextInput
+        style={tw`text-indigo-50`}
         placeholder="Email"
         onChangeText={(val) => setEmail(val)}
       ></TextInput>
-      <TextInput style={ tw `text-indigo-50` }
+      <TextInput
+        style={tw`text-indigo-50`}
         placeholder="Password"
         secureTextEntry
         onChangeText={(val) => setPassword(val)}
       ></TextInput>
       <Button title="Login" onPress={() => login(email, password)} />
-      <Text style={ tw `text-white`}>Not registered yet?</Text>
-      <Button 
+      <Text style={tw`text-white`}>Not registered yet?</Text>
+      <Button
         title="Register"
         onPress={() => navigation.navigate("Register")}
       />
