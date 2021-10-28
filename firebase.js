@@ -1,5 +1,5 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { initializeFirestore, getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import {
   REACT_APP_FIREBASE_API_KEY,
@@ -12,7 +12,7 @@ import {
 } from "@env";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCsjTrfUzAukUgsVUcBYhNWz8kKTm06Q5g",
+  apiKey: REACT_APP_FIREBASE_API_KEY,
   authDomain: REACT_APP_FIREBASE_AUTH_DOMAIN,
   projectId: REACT_APP_FIREBASE_PROJECT_ID,
   storageBucket: REACT_APP_FIREBASE_STORAGE_BUCKET,
@@ -23,7 +23,7 @@ const firebaseConfig = {
 
 // init firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-const db = getFirestore();
+const db = initializeFirestore(app, { useFetchStreams: false });
 const storage = getStorage();
 
 export { app, db, storage };
