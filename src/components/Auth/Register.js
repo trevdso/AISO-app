@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { app } from "../../../firebase";
 import { StyleSheet, Text, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
@@ -16,11 +17,10 @@ const Register = ({ navigation }) => {
   const registerNewUser = (email, name, password) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((result) => {
-        firebase
-          .firestore()
-          .collection("users")
-          .doc(firebase.auth().currentUser.uid)
-          .set({ name, email });
+        setDoc(doc(getFirestore(app), "users", auth.currentUser.uid), {
+          name: name,
+          email: email,
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -28,16 +28,17 @@ const Register = ({ navigation }) => {
   };
 
   return (
-    <View style={tw `flex-1 items-center justify-center bg-aiso-gray` }>
-      <TextInput
+
+    <View style={tw `flex-1 items-center justify-center bg-aiso-gray`}>
+      <TextInput style={ tw `text-indigo-50` }
         placeholder="Email"
         onChangeText={(val) => setEmail(val)}
       ></TextInput>
-      <TextInput
+      <TextInput style={ tw `text-indigo-50` }
         placeholder="Name"
         onChangeText={(val) => setName(val)}
       ></TextInput>
-      <TextInput
+      <TextInput style={ tw `text-indigo-50` }
         placeholder="Password"
         secureTextEntry
         onChangeText={(val) => setPassword(val)}
