@@ -5,6 +5,7 @@ import { app } from "../../../firebase";
 import { StyleSheet, Text, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import Button from "../Button/Button";
+import tw from "../../../lib/tailwind";
 
 const Register = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -27,7 +28,7 @@ const Register = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <View style={tw `flex-1 items-center justify-center bg-aiso-gray` }>
       <TextInput
         placeholder="Email"
         onChangeText={(val) => setEmail(val)}
@@ -45,7 +46,7 @@ const Register = ({ navigation }) => {
         title="Register"
         onPress={() => registerNewUser(email, name, password)}
       />
-      <Text>Already a user? Login instead</Text>
+      <Text style={ tw `text-indigo-50` }>Already a user? Login instead</Text>
       <Button title="Login" onPress={() => navigation.navigate("Login")} />
     </View>
   );
