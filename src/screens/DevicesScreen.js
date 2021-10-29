@@ -1,79 +1,60 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import { StyleSheet, Text, View, Alert, TextInput } from "react-native";
-import Button from "../components/Button/Button";
+import { StyleSheet, Text, View } from "react-native";
 
-import { io } from "socket.io-client";
+import socket from "../../socket";
+
+import { devices } from "../recoil/atoms/deviceAtom";
+import { useRecoilState } from "recoil";
 
 import tw from "../../lib/tailwind";
+import DeviceChip from "../components/Common/DeviceChip";
 
-const socket = io("http://localhost:3000/");
+const DevicesScreen = ({ navigation }) => {
+  const [allDevices, setAllDevices] = useRecoilState(devices);
 
-const DevicesScreen = () => {
-  const [input, setInput] = useState("");
-  const [allMessages, setAllMessages] = useState([]);
-  const [allDevices, setAllDevices] = useState([]);
-
-  const sendMessage = () => {
-    console.log(input);
-    setAllMessages((oldMessages) => [...oldMessages, input]);
-    console.log(allMessages);
-    socket.emit("chat message", input);
-    setInput("");
+  const selectDevice = (currentDevice) => {
+    socket.emit("select-bot", currentDevice.id, (response) => {
+      console.log(response.status);
+    });
+    navigation.navigate("Remote", { device: currentDevice });
   };
 
   useFocusEffect(
     useCallback(() => {
-      console.log("reloaded");
-      socket.on("chat message", (msg) => {
-        setAllMessages((oldMessages) => [...oldMessages, msg]);
-        console.log(msg);
-        console.log(allMessages);
+      socket.emit("get-bots", (response) => {
+        setAllDevices([...response.data]);
       });
-      socket.on("getAllOnlineDevices", (allDevices) => {
-        setAllDevices([...allDevices]);
-        console.log(allDevices);
-      });
-      socket.on("connection", () => {
-        socket.emit("getAllOnlineDevices");
+      socket.on("bots", (bots) => {
+        setAllDevices([...bots]);
       });
 
-      socket.emit("getAllOnlineDevices");
       return () => {
-        socket.off("chat message");
-        socket.off("getAllOnlineDevices");
+        socket.off("bots");
       };
     }, [])
   );
 
   return (
     <View style={tw`flex-1 items-center justify-center`}>
-      {allDevices.map((device, index) => {
-        return (
-          <View>
-            <Text key={index} style={tw`text-white`}>
-              {device}
-            </Text>
-          </View>
-        );
-      })}
-      {allMessages.map((msg, index) => {
-        return (
-          <View>
-            <Text key={index} style={tw`text-white`}>
-              {msg}
-            </Text>
-          </View>
-        );
-      })}
-      <TextInput
-        style={{ height: 40, borderWidth: 2, top: 600, color: "white" }}
-        autoCorrect={false}
-        value={input}
-        onSubmitEditing={sendMessage}
-        onChangeText={setInput}
-      />
-      <Button title="Test!" onPress={sendMessage} />
+      {allDevices.length != 0 ? (
+        allDevices.map((device, index) => {
+          return (
+            <DeviceChip
+              key={index}
+              name={device.name}
+              deviceID={device.id}
+              onPress={() => selectDevice(device)}
+            ></DeviceChip>
+          );
+        })
+      ) : (
+        <View style={tw`bg-red-700 flex-row items-center rounded-sm`}>
+          <Text style={tw`text-white px-2 py-2`}>
+            No available devices found
+          </Text>
+        </View>
+      )}
     </View>
   );
 };

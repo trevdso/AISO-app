@@ -5,7 +5,9 @@ import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { app } from "../../../firebase";
 import { StyleSheet, Text, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import Button from "../Button/Button";
+import Button from "../Common/Button";
+
+import socket from "../../../socket";
 
 const Register = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -20,6 +22,9 @@ const Register = ({ navigation }) => {
           name: name,
           email: email,
         });
+        socket.auth = { deviceType: "user" };
+        socket.auth.name = email;
+        socket.connect();
       })
       .catch((error) => {
         console.log(error);

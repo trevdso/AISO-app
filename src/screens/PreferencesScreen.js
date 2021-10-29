@@ -10,16 +10,20 @@ import { getAuth, signOut } from "firebase/auth";
 
 // Utils
 import tw from "../../lib/tailwind";
-import Button from "../components/Button/Button";
+import Button from "../components/Common/Button";
+
+import socket from "../../socket";
 
 const PreferencesScreen = () => {
   const name = useRecoilValue(username);
   const auth = getAuth();
 
   const logout = () => {
-    signOut(auth).catch((error) => {
-      console.log(error);
-    });
+    signOut(auth)
+      .then(socket.disconnect())
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
