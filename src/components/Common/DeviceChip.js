@@ -11,7 +11,7 @@ const DeviceChip = (props) => {
       onPress={onPress}
     >
       <Text style={tw`text-white`}>{name}</Text>
-      {deviceID && <Text style={tw`text-grey-300 text-xs`}>{deviceID}</Text>}
+      {deviceID && <Text style={tw`text-gray-300 text-xs`}>{deviceID}</Text>}
       <MaterialCommunityIcons name={"circle"} size={"20px"} color={"green"} />
     </Pressable>
   );
