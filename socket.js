@@ -1,5 +1,10 @@
 import { io } from "socket.io-client";
-const socket = io("https://aiso-server.herokuapp.com/", {
+//production
+//const url = "https://aiso-server.herokuapp.com/";
+//local dev
+const url = "http://localhost:3000/";
+
+const socket = io(url, {
   autoConnect: false,
 });
 
