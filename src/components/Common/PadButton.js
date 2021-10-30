@@ -27,8 +27,8 @@ const PadButton = (props) => {
       ico = "stop-circle";
       color = "red-500";
       break;
-    case "default":
-      ico = "checkbox-marked-circle";
+    case "pickup":
+      ico = "hand-right";
       break;
   }
   return disabled ? (
