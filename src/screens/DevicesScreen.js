@@ -50,9 +50,7 @@ const DevicesScreen = ({ navigation }) => {
         })
       ) : (
         <View style={tw`bg-red-700 flex-row items-center rounded-sm`}>
-          <Text style={tw`text-white px-2 py-2`}>
-            No available devices found
-          </Text>
+          <Text style={tw`text-white p-2`}>No available devices found</Text>
         </View>
       )}
     </View>
