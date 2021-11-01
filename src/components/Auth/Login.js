@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 
+// Firebase
 import { getAuth, signInWithEmailAndPassword } from "@firebase/auth";
 import { app } from "../../../firebase";
-import { StyleSheet, Text, TextInput, View } from "react-native";
-import Button from "../Common/Button";
-import tw from "../../../lib/tailwind";
 
+// Components
+import { StyleSheet, Text, View, Image } from "react-native";
+import Button from "../Common/Button";
+import TextField from "../Common/TextField";
+
+// Socketio
 import socket from "../../../socket";
+
+// Tailwind
+import tw from "../../../lib/tailwind";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -27,23 +34,23 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={tw`flex-1 items-center justify-center bg-aiso-gray`}>
-      <TextInput
-        style={tw`text-indigo-50`}
-        placeholder="Email"
-        onChangeText={(val) => setEmail(val)}
-      ></TextInput>
-      <TextInput
-        style={tw`text-indigo-50`}
-        placeholder="Password"
-        secureTextEntry
-        onChangeText={(val) => setPassword(val)}
-      ></TextInput>
-      <Button title="Login" onPress={() => login(email, password)} />
-      <Text style={tw`text-white`}>Not registered yet?</Text>
-      <Button
-        title="Register"
-        onPress={() => navigation.navigate("Register")}
-      />
+      <Image source={require("../../../assets/icon.png")} />
+      <View style={tw`flex-1 justify-end`}>
+        <TextField placeholder="Email" onChangeText={(val) => setEmail(val)} />
+        <TextField
+          placeholder="Password"
+          secureTextEntry
+          onChangeText={(val) => setPassword(val)}
+        />
+      </View>
+      <View style={tw`flex-1 items-center justify-start my-4`}>
+        <Button title="Login" onPress={() => login(email, password)} />
+        <Text style={tw`text-white mt-2`}>Not registered yet?</Text>
+        <Button
+          title="Register"
+          onPress={() => navigation.navigate("Register")}
+        />
+      </View>
     </View>
   );
 };
