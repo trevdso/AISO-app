@@ -8,7 +8,7 @@ const TextField = (props) => {
   return (
     <TextInput
       onChangeText={onChangeText}
-      placeholder={placeholder && placeholder}
+      placeholder={placeholder}
       secureTextEntry={secureTextEntry}
       style={tw`bg-white px-2 py-2 w-80 border-b-2 border-aiso-blue mb-2`}
     />
