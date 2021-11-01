@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 
+// Firebase
 import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { app } from "../../../firebase";
-import { StyleSheet, Text, View } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
+
+// Components
+import { StyleSheet, Text, View, Image } from "react-native";
+import TextField from "../Common/TextField";
 import Button from "../Common/Button";
 
+// Socketio
 import socket from "../../../socket";
+
+// Tailwind
+import tw from "../../../lib/tailwind";
 
 const Register = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -32,26 +39,25 @@ const Register = ({ navigation }) => {
   };
 
   return (
-    <View>
-      <TextInput
-        placeholder="Email"
-        onChangeText={(val) => setEmail(val)}
-      ></TextInput>
-      <TextInput
-        placeholder="Name"
-        onChangeText={(val) => setName(val)}
-      ></TextInput>
-      <TextInput
-        placeholder="Password"
-        secureTextEntry
-        onChangeText={(val) => setPassword(val)}
-      ></TextInput>
-      <Button
-        title="Register"
-        onPress={() => registerNewUser(email, name, password)}
-      />
-      <Text>Already a user? Login instead</Text>
-      <Button title="Login" onPress={() => navigation.navigate("Login")} />
+    <View style={tw`flex-1 items-center justify-center bg-aiso-gray`}>
+      <Image />
+      <View style={tw`flex-1.25 justify-end`}>
+        <TextField placeholder="Email" onChangeText={(val) => setEmail(val)} />
+        <TextField placeholder="Name" onChangeText={(val) => setName(val)} />
+        <TextField
+          placeholder="Password"
+          secureTextEntry
+          onChangeText={(val) => setPassword(val)}
+        />
+      </View>
+      <View style={tw`flex-0.75 items-center justify-start my-4`}>
+        <Button
+          title="Register"
+          onPress={() => registerNewUser(email, name, password)}
+        />
+        <Text style={tw`text-white mt-2`}>Already a user? Login instead</Text>
+        <Button title="Login" onPress={() => navigation.navigate("Login")} />
+      </View>
     </View>
   );
 };
