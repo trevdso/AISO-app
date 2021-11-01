@@ -7,33 +7,41 @@ const PadButton = (props) => {
   const { onPress, icon = "default", disabled = true } = props;
   var ico = "default";
   var color = "white";
+  var rounded = "rounded";
   switch (icon) {
     case "up":
       ico = "arrow-up-drop-circle";
+      rounded = "rounded-t-lg";
       break;
     case "down":
       ico = "arrow-down-drop-circle";
+      rounded = "rounded-b-lg";
       break;
     case "left":
       ico = "arrow-left-drop-circle";
+      rounded = "rounded-tl-lg rounded-bl-lg";
       break;
     case "right":
       ico = "arrow-right-drop-circle";
+      rounded = "rounded-tr-lg rounded-br-lg";
       break;
     case "disconnect":
       ico = "link-off";
+      rounded = "rounded-full";
       break;
     case "stop":
       ico = "stop-circle";
       color = "red-500";
+      rounded = "rounded-full";
       break;
     case "pickup":
       ico = "hand-right";
+      rounded = "rounded";
       break;
   }
   return disabled ? (
     <Pressable
-      style={tw`bg-gray-500 items-center justify-center px-2 py-2 w-20 h-20 rounded`}
+      style={tw`bg-gray-500 items-center justify-center px-2 py-2 w-20 h-20 ${rounded}`}
       onPress={onPress}
       disabled={disabled}
     >
@@ -46,7 +54,7 @@ const PadButton = (props) => {
     </Pressable>
   ) : (
     <Pressable
-      style={tw`bg-gray-500 items-center justify-center px-2 py-2 w-20 h-20 rounded`}
+      style={tw`bg-gray-500 items-center justify-center px-2 py-2 w-20 h-20 ${rounded}`}
       onPress={onPress}
     >
       <MaterialCommunityIcons
