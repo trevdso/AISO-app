@@ -7,7 +7,7 @@ const DeviceChip = (props) => {
   const { onPress, name = "", deviceID } = props;
   return (
     <Pressable
-      style={tw`bg-gray-600 flex-row items-center justify-evenly px-2 py-2 w-120`}
+      style={tw`bg-gray-600 flex-row justify-between px-2 py-2 w-80 border-r-2 border-aiso-blue mb-px`}
       onPress={onPress}
     >
       <Text style={tw`text-white`}>{name}</Text>
