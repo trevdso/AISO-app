@@ -29,7 +29,7 @@ const PadButton = (props) => {
       ico = "link-off";
       rounded = "rounded-full";
       break;
-    case "stop":
+    case "estop":
       ico = "stop-circle";
       color = "red-500";
       rounded = "rounded-full";
@@ -47,22 +47,16 @@ const PadButton = (props) => {
     >
       <MaterialCommunityIcons
         name={ico}
-        size={"40px"}
+        size={40}
         color={tw.color("gray-400")}
       />
-      {/*ico == "link-off" && <Text style={tw`text-white`}>Disconnect</Text>*/}
     </Pressable>
   ) : (
     <Pressable
       style={tw`bg-gray-500 items-center justify-center px-2 py-2 w-20 h-20 ${rounded}`}
       onPress={onPress}
     >
-      <MaterialCommunityIcons
-        name={ico}
-        size={"40px"}
-        color={tw.color(color)}
-      />
-      {/*ico == "link-off" && <Text style={tw`text-white`}>Disconnect</Text>*/}
+      <MaterialCommunityIcons name={ico} size={40} color={tw.color(color)} />
     </Pressable>
   );
 };

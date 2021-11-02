@@ -37,14 +37,14 @@ const RemoteScreen = ({ navigation, route }) => {
       case "right":
         socket.emit("move-right", currentDevice.id);
         break;
+      case "e-stop":
+        socket.emit("e-stop", currentDevice.id);
+        break;
       case "pickup":
         pickedUp
           ? socket.emit("put-down", currentDevice.id)
           : socket.emit("pick-up", currentDevice.id);
         setPickedUp(!pickedUp);
-        break;
-      case "estop":
-        socket.emit("estop", currentDevice.id);
         break;
       default:
         break;
@@ -62,8 +62,8 @@ const RemoteScreen = ({ navigation, route }) => {
     }, [route, disabled, device, pickedUp])
   );
   return (
-    <View>
-      <View style={tw`flex-1 items-center justify-center`}>
+    <View style={tw`flex-1 items-center justify-center`}>
+      <View style={tw`flex items-start justify-center`}>
         {device != null ? (
           <ConnectionStatus
             connected={true}
@@ -80,7 +80,7 @@ const RemoteScreen = ({ navigation, route }) => {
           disabled={disabled}
           onPress={() => performAction("up", device)}
         />
-        <View style={tw`flex-row items-center justify-evenly px-2 py-2 w-100`}>
+        <View style={tw`flex-row justify-evenly px-2 py-2 w-100`}>
           <PadButton
             icon={"left"}
             disabled={disabled}
@@ -104,17 +104,17 @@ const RemoteScreen = ({ navigation, route }) => {
           onPress={() => performAction("down", device)}
         />
       </View>
-      <View style={tw`flex items-center justify-around px-2 py-2 h-80`}>
-        <View style={tw`flex-row items-end justify-evenly px-2 py-2 w-100`}>
+      <View style={tw`flex items-center px-2 py-2`}>
+        <View style={tw`flex-row justify-evenly px-2 py-2 w-100`}>
           <PadButton
             icon={"disconnect"}
             disabled={disabled}
             onPress={() => disconnectBot(device)}
           />
           <PadButton
-            icon={"stop"}
+            icon={"estop"}
             disabled={disabled}
-            onPress={() => performAction("estop", device)}
+            onPress={() => performAction("e-stop", device)}
           />
         </View>
       </View>
