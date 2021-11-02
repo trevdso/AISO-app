@@ -12,7 +12,7 @@ const DeviceChip = (props) => {
     >
       <Text style={tw`text-white`}>{name}</Text>
       {deviceID && <Text style={tw`text-gray-300 text-xs`}>{deviceID}</Text>}
-      <MaterialCommunityIcons name={"circle"} size={"20px"} color={"green"} />
+      <MaterialCommunityIcons name={"circle"} size={20} color={"green"} />
     </Pressable>
   );
 };

@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "AISO-app",
+    "name": "AISO",
     "slug": "AISO-app",
     "version": "1.0.0",
     "assetBundlePatterns": [
@@ -11,6 +11,7 @@
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#212127"
-    }
+    },
+    "description": "Controller app for the AISO-bot robot arm"
   }
 }

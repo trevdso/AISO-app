@@ -1,6 +1,5 @@
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
+import { TextInput } from "react-native";
 import tw from "../../../lib/tailwind";
 
 const TextField = (props) => {
