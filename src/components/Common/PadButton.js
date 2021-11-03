@@ -38,6 +38,11 @@ const PadButton = (props) => {
       ico = "hand-right";
       rounded = "rounded";
       break;
+    case "sort":
+      ico = "arrow-decision";
+      color = "aiso-blue";
+      rounded = "rounded-full";
+      break;
   }
   return disabled ? (
     <Pressable
