@@ -40,6 +40,9 @@ const RemoteScreen = ({ navigation, route }) => {
       case "e-stop":
         socket.emit("e-stop", currentDevice.id);
         break;
+      case "sort":
+        socket.emit("sort", currentDevice.id);
+        break;
       case "pickup":
         pickedUp
           ? socket.emit("put-down", currentDevice.id)
@@ -110,6 +113,11 @@ const RemoteScreen = ({ navigation, route }) => {
             icon={"disconnect"}
             disabled={disabled}
             onPress={() => disconnectBot(device)}
+          />
+          <PadButton
+            icon={"sort"}
+            disabled={disabled}
+            onPress={() => performAction("sort", device)}
           />
           <PadButton
             icon={"estop"}
