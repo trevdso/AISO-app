@@ -4,19 +4,23 @@ import { StyleSheet, Text, View } from "react-native";
 
 import socket from "../../socket";
 
-import { devices } from "../recoil/atoms/deviceAtom";
-import { useRecoilState } from "recoil";
+import { devices, currentDevice } from "../recoil/atoms/deviceAtom";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 import tw from "../../lib/tailwind";
 import DeviceChip from "../components/Common/DeviceChip";
+import { selectedModel } from "../recoil/atoms/modelAtom";
 
 const DevicesScreen = ({ navigation }) => {
   const [allDevices, setAllDevices] = useRecoilState(devices);
+  const [currDevice, setCurrDevice] = useRecoilState(currentDevice);
+  const model = useRecoilValue(selectedModel);
 
   const selectDevice = (currentDevice) => {
     socket.emit("select-bot", currentDevice.id, (response) => {
       console.log(response.status);
     });
+    setCurrDevice(currentDevice);
     navigation.navigate("Remote", { device: currentDevice });
   };
 

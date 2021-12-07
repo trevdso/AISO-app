@@ -21,11 +21,14 @@ import tw from "../../lib/tailwind";
 
 // Screens
 import DevicesScreen from "./DevicesScreen";
+import ModelsScreen from "./ModelsScreen";
 import RemoteScreen from "./RemoteScreen";
 import PreferencesScreen from "./PreferencesScreen";
 
 const UserHomeScreen = () => {
   const Tab = createBottomTabNavigator();
+  const setUsername = useSetRecoilState(username);
+
   const globalTheme = {
     colors: {
       background: tw.color("aiso-gray"),
@@ -36,7 +39,6 @@ const UserHomeScreen = () => {
       notification: tw.color("aiso-blue"),
     },
   };
-  const setUsername = useSetRecoilState(username);
 
   useEffect(() => {
     if (getAuth(app).currentUser && !socket.connected) {
@@ -65,6 +67,8 @@ const UserHomeScreen = () => {
               iconName = "remote-tv";
             } else if (route.name === "Devices") {
               iconName = "robot-industrial";
+            } else if (route.name === "Models") {
+              iconName = "star-box-multiple";
             } else if (route.name === "Preferences") {
               iconName = "account-settings";
             }
@@ -83,6 +87,7 @@ const UserHomeScreen = () => {
       >
         <Tab.Screen name="Remote" component={RemoteScreen} />
         <Tab.Screen name="Devices" component={DevicesScreen} />
+        <Tab.Screen name="Models" component={ModelsScreen} />
         <Tab.Screen name="Preferences" component={PreferencesScreen} />
       </Tab.Navigator>
     </NavigationContainer>

@@ -24,6 +24,6 @@ const firebaseConfig = {
 // init firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const db = initializeFirestore(app, { useFetchStreams: false });
-const storage = getStorage();
+const storage = getStorage(app);
 
 export { app, db, storage };

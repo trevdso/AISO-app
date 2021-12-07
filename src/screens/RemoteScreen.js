@@ -3,6 +3,9 @@ import { StyleSheet, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import tw from "../../lib/tailwind";
 
+import { currentDevice } from "../recoil/atoms/deviceAtom";
+import { useRecoilState } from "recoil";
+
 import ConnectionStatus from "../components/Common/ConnectionStatus";
 import PadButton from "../components/Common/PadButton";
 import socket from "../../socket";
@@ -11,6 +14,7 @@ const RemoteScreen = ({ navigation, route }) => {
   const [disabled, setDisabled] = useState(true);
   const [device, setDevice] = useState(null);
   const [pickedUp, setPickedUp] = useState(false);
+  const [currDevice, setCurrDevice] = useRecoilState(currentDevice);
 
   const disconnectBot = (currentDevice) => {
     if (currentDevice != null) {
@@ -20,6 +24,7 @@ const RemoteScreen = ({ navigation, route }) => {
           setDevice(null);
         }
       });
+      setCurrDevice(null);
     }
   };
 
@@ -58,9 +63,11 @@ const RemoteScreen = ({ navigation, route }) => {
     useCallback(() => {
       setDevice(route.params ? route.params.device : null);
       device != null ? setDisabled(false) : setDisabled(true);
+      device != null ? setCurrDevice(device) : setCurrDevice(null);
       socket.on("bot-crash", () => {
         route.params = null;
         setDevice(null);
+        setCurrDevice(null);
       });
     }, [route, disabled, device, pickedUp])
   );
